@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bloom & Stem Bouquets | Shop Catalog</title>
+  <meta name="description" content="Browse our hand-tied flower bouquets. Filter by occasion, price, or flower variety and select the perfect arrangement.">
+  
+  <!-- Roboto and custom fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Content:wght@400;700&family=Edu+AU+VIC+WA+NT+Guides:wght@400..700&family=Khmer&family=Playwrite+GB+J+Guides:ital@0;1&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+  
+  <!-- Bootstrap 5 CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+  
+  <!-- Bootstrap Icons -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  
+  <!-- Custom CSS overrides -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- ========================================== -->
+  <!-- NAVIGATION BAR                             -->
+  <!-- ========================================== -->
+  <nav class="navbar navbar-expand-lg sticky-top py-3">
+    <div class="container">
+      <a class="navbar-brand d-flex align-items-center fs-3 fw-bold" href="index.html">
+        <span class="text-primary me-2"><i class="bi bi-flower1"></i></span>
+        <span class="display-font">Bloom & Stem</span>
+      </a>
+      <div class="d-flex align-items-center order-lg-last ms-2">
+        <a href="cart_and_checkout.html" class="btn btn-outline-primary rounded-pill px-3 py-2 position-relative" aria-label="View Shopping Cart">
+          <i class="bi bi-bag"></i>
+          <span id="cart-badge-count" class="badge rounded-pill bg-primary badge-cart-count" style="display: none;">0</span>
+        </a>
+        <button class="navbar-toggler ms-2 border-0" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavbar" aria-controls="mainNavbar" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+      </div>
+      
+      <div class="collapse navbar-collapse justify-content-center" id="mainNavbar">
+        <ul class="navbar-nav mb-2 mb-lg-0 text-center gap-2 mt-2 mt-lg-0">
+          <li class="nav-item">
+            <a class="nav-link" href="index.html">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active" href="shop_and_catalog.html">Shop Bouquets</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="about_and_contact.html">About & Contact</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Toast Alert Notifications Container -->
+  <div id="toast-container" class="toast-container position-fixed bottom-0 end-0 p-3" style="z-index: 1080;"></div>
+
+  <!-- ========================================== -->
+  <!-- VIEW 2: SHOP / CATALOG                     -->
+  <!-- ========================================== -->
+  <main id="shop-view" class="page-view active-view">
+    <div class="container py-5">
+      <!-- Breadcrumb and Top header -->
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+          <li class="breadcrumb-item active" aria-current="page">Shop</li>
+        </ol>
+      </nav>
+
+      <div class="d-flex flex-wrap justify-content-between align-items-end mb-4 gap-3">
+        <div>
+          <h1 class="display-5 mb-1">Our Bouquet Collection</h1>
+          <p id="results-count" class="text-secondary small mb-0">8 bouquets available</p>
+        </div>
+        <div class="d-flex gap-2">
+          <!-- Mobile Filters Trigger Button -->
+          <button class="btn btn-outline-primary d-lg-none rounded-pill" type="button" data-bs-toggle="offcanvas" data-bs-target="#mobileFiltersOffcanvas" aria-controls="mobileFiltersOffcanvas">
+            <i class="bi bi-sliders2-vertical me-2"></i> Filters
+          </button>
+          
+          <select id="sort-products-select" class="form-select rounded-pill px-3" aria-label="Sort products">
+            <option value="featured">Sort by: Featured</option>
+            <option value="price-low">Price: Low to High</option>
+            <option value="price-high">Price: High to Low</option>
+            <option value="rating">Popularity</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="row g-4">
+        <!-- Desktop Sidebar Filters (Column 3) -->
+        <div class="col-lg-3 d-none d-lg-block">
+          <div class="card border-0 rounded-4 p-4 shadow-sm bg-white sticky-top" style="top: 100px; z-index: 10;">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+              <h5 class="mb-0 fw-bold">Filter By</h5>
+              <button onclick="resetFilters()" class="btn btn-link btn-sm text-decoration-none text-muted p-0">Clear All</button>
+            </div>
+
+            <!-- Search input -->
+            <div class="mb-4">
+              <label for="search-products-input" class="form-label small fw-bold text-uppercase">Search</label>
+              <div class="input-group">
+                <span class="input-group-text bg-white border-end-0 text-muted"><i class="bi bi-search"></i></span>
+                <input type="text" id="search-products-input" class="form-control border-start-0 ps-0" placeholder="Keywords...">
+              </div>
+            </div>
+
+            <!-- Occasion select -->
+            <div class="mb-4">
+              <label for="filter-occasion-select" class="form-label small fw-bold text-uppercase">Occasion</label>
+              <select id="filter-occasion-select" class="form-select">
+                <option value="all">All Occasions</option>
+                <option value="anniversary">Anniversary</option>
+                <option value="birthday">Birthday</option>
+                <option value="love & romance">Love & Romance</option>
+                <option value="thank you">Thank You</option>
+                <option value="sympathy">Sympathy</option>
+                <option value="congrats">Congrats</option>
+              </select>
+            </div>
+
+            <!-- Flower type select -->
+            <div class="mb-4">
+              <label for="filter-flower-select" class="form-label small fw-bold text-uppercase">Flower Type</label>
+              <select id="filter-flower-select" class="form-select">
+                <option value="all">All Flowers</option>
+                <option value="roses">Roses</option>
+                <option value="lilies">Lilies</option>
+                <option value="tulips">Tulips</option>
+                <option value="orchids">Orchids</option>
+                <option value="sunflowers">Sunflowers</option>
+                <option value="carnations">Carnations</option>
+                <option value="mixed">Mixed Bunch</option>
+              </select>
+            </div>
+
+            <!-- Price radio group -->
+            <div class="mb-4">
+              <label class="form-label small fw-bold text-uppercase mb-2">Price Range</label>
+              <div class="form-check mb-2">
+                <input class="form-check-input" type="radio" name="priceFilter" id="priceAll" value="all" checked>
+                <label class="form-check-label small" for="priceAll">All Prices</label>
+              </div>
+              <div class="form-check mb-2">
+                <input class="form-check-input" type="radio" name="priceFilter" id="priceRange1" value="0-50">
+                <label class="form-check-label small" for="priceRange1">Under $50</label>
+              </div>
+              <div class="form-check mb-2">
+                <input class="form-check-input" type="radio" name="priceFilter" id="priceRange2" value="50-80">
+                <label class="form-check-label small" for="priceRange2">$50 - $80</label>
+              </div>
+              <div class="form-check mb-2">
+                <input class="form-check-input" type="radio" name="priceFilter" id="priceRange3" value="80-999">
+                <label class="form-check-label small" for="priceRange3">Over $80</label>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Product Grid (Column 9) -->
+        <div class="col-lg-9">
+          <div class="row g-4" id="shop-products-grid">
+            <!-- Rendered dynamically via app.js -->
+          </div>
+
+          <!-- Pagination -->
+          <nav aria-label="Catalog pagination" class="mt-5">
+            <ul class="pagination justify-content-center">
+              <li class="page-item disabled">
+                <a class="page-link rounded-circle me-2" href="#" tabindex="-1" aria-disabled="true"><i class="bi bi-chevron-left"></i></a>
+              </li>
+              <li class="page-item active"><a class="page-link rounded-circle me-2" href="#">1</a></li>
+              <li class="page-item"><a class="page-link rounded-circle me-2" href="#">2</a></li>
+              <li class="page-item">
+                <a class="page-link rounded-circle" href="#"><i class="bi bi-chevron-right"></i></a>
+              </li>
+            </ul>
+          </nav>
+        </div>
+      </div>
+    </div>
+
+    <!-- Mobile Filters Offcanvas Menu -->
+    <div class="offcanvas offcanvas-start" tabindex="-1" id="mobileFiltersOffcanvas" aria-labelledby="mobileFiltersOffcanvasLabel">
+      <div class="offcanvas-header border-bottom">
+        <h5 class="offcanvas-title fw-bold" id="mobileFiltersOffcanvasLabel"><i class="bi bi-sliders"></i> Filter Bouquets</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+      </div>
+      <div class="offcanvas-body">
+        <!-- Price radios -->
+        <div class="mb-4">
+          <label class="form-label small fw-bold text-uppercase mb-2">Price Range</label>
+          <div class="form-check mb-2">
+            <input class="form-check-input" type="radio" name="priceFilterMobile" id="priceAllMobile" value="all" checked>
+            <label class="form-check-label small" for="priceAllMobile">All Prices</label>
+          </div>
+          <div class="form-check mb-2">
+            <input class="form-check-input" type="radio" name="priceFilterMobile" id="priceRange1Mobile" value="0-50">
+            <label class="form-check-label small" for="priceRange1Mobile">Under $50</label>
+          </div>
+          <div class="form-check mb-2">
+            <input class="form-check-input" type="radio" name="priceFilterMobile" id="priceRange2Mobile" value="50-80">
+            <label class="form-check-label small" for="priceRange2Mobile">$50 - $80</label>
+          </div>
+          <div class="form-check mb-2">
+            <input class="form-check-input" type="radio" name="priceFilterMobile" id="priceRange3Mobile" value="80-999">
+            <label class="form-check-label small" for="priceRange3Mobile">Over $80</label>
+          </div>
+        </div>
+
+        <!-- Occasion Select Mobile -->
+        <div class="mb-4">
+          <label for="filter-occasion-select-mobile" class="form-label small fw-bold text-uppercase">Occasion</label>
+          <select id="filter-occasion-select-mobile" class="form-select">
+            <option value="all">All Occasions</option>
+            <option value="anniversary">Anniversary</option>
+            <option value="birthday">Birthday</option>
+            <option value="love & romance">Love & Romance</option>
+            <option value="thank you">Thank You</option>
+            <option value="sympathy">Sympathy</option>
+            <option value="congrats">Congrats</option>
+          </select>
+        </div>
+
+        <!-- Flower Select Mobile -->
+        <div class="mb-4">
+          <label for="filter-flower-select-mobile" class="form-label small fw-bold text-uppercase">Flower Type</label>
+          <select id="filter-flower-select-mobile" class="form-select">
+            <option value="all">All Flowers</option>
+            <option value="roses">Roses</option>
+            <option value="lilies">Lilies</option>
+            <option value="tulips">Tulips</option>
+            <option value="orchids">Orchids</option>
+            <option value="sunflowers">Sunflowers</option>
+            <option value="carnations">Carnations</option>
+            <option value="mixed">Mixed Bunch</option>
+          </select>
+        </div>
+
+        <button onclick="resetFilters();" class="btn btn-outline-primary w-100 rounded-pill mt-3" data-bs-dismiss="offcanvas">Reset Filters</button>
+      </div>
+    </div>
+  </main>
+
+  <!-- ========================================== -->
+  <!-- FOOTER                                     -->
+  <!-- ========================================== -->
+  <footer class="footer-section py-5 mt-5">
+    <div class="container">
+      <div class="row g-4 mb-4">
+        <!-- Logo and About -->
+        <div class="col-lg-4 col-md-6">
+          <h4 class="footer-logo mb-3"><i class="bi bi-flower1"></i> Bloom & Stem</h4>
+          <p class="text-secondary small mb-4">Sharing beauty and affection through certified organic, grower-direct floral styling and refrigerated delivery.</p>
+          <div class="d-flex gap-3 fs-5">
+            <a href="#" class="text-secondary text-primary-hover" aria-label="Visit Facebook"><i class="bi bi-facebook"></i></a>
+            <a href="#" class="text-secondary text-primary-hover" aria-label="Visit Instagram"><i class="bi bi-instagram"></i></a>
+            <a href="#" class="text-secondary text-primary-hover" aria-label="Visit Pinterest"><i class="bi bi-pinterest"></i></a>
+          </div>
+        </div>
+        
+        <!-- Navigation links -->
+        <div class="col-lg-2 col-md-3 col-6 ms-lg-auto">
+          <h5 class="fw-bold mb-3 small text-uppercase letter-spacing-1">Company</h5>
+          <ul class="list-unstyled mb-0 small">
+            <li class="mb-2"><a href="about_and_contact.html" class="text-secondary text-decoration-none">Our Story</a></li>
+            <li class="mb-2"><a href="about_and_contact.html" class="text-secondary text-decoration-none">Greenhouses</a></li>
+            <li class="mb-2"><a href="about_and_contact.html" class="text-secondary text-decoration-none">Press & Media</a></li>
+            <li class="mb-2"><a href="about_and_contact.html" class="text-secondary text-decoration-none">Careers</a></li>
+          </ul>
+        </div>
+
+        <div class="col-lg-2 col-md-3 col-6">
+          <h5 class="fw-bold mb-3 small text-uppercase letter-spacing-1">Help & Service</h5>
+          <ul class="list-unstyled mb-0 small">
+            <li class="mb-2"><a href="about_and_contact.html" class="text-secondary text-decoration-none">FAQs</a></li>
+            <li class="mb-2"><a href="about_and_contact.html" class="text-secondary text-decoration-none">Delivery policies</a></li>
+            <li class="mb-2"><a href="about_and_contact.html" class="text-secondary text-decoration-none">Refund Policy</a></li>
+            <li class="mb-2"><a href="about_and_contact.html" class="text-secondary text-decoration-none">Contact Us</a></li>
+          </ul>
+        </div>
+
+        <div class="col-lg-3 col-md-6">
+          <h5 class="fw-bold mb-3 small text-uppercase letter-spacing-1">Local Shop</h5>
+          <p class="text-secondary small mb-2"><i class="bi bi-geo-alt me-2"></i> 482 Magnolia Lane, Greenpoint, NY</p>
+          <p class="text-secondary small"><i class="bi bi-envelope me-2"></i> hello@bloomandstem.com</p>
+          <span class="text-muted small">Bloom & Stem &copy; 2026. All rights reserved.</span>
+        </div>
+      </div>
+      <hr class="my-4 opacity-10">
+      <div class="text-center text-secondary small">
+        <p class="mb-0">Designed elegantly using Bootstrap 5 framework only.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Bootstrap Bundle with Popper -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+
+  <!-- Custom App controller -->
+  <script src="app.js"></script>
+</body>
+</html>
